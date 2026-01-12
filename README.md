@@ -2,95 +2,122 @@
   <img src="https://img.shields.io/badge/Active%20Directory-Domain%20Services-0078D4?style=for-the-badge&logo=windows&logoColor=white" />
 </p>
 
-
 # Active Directory Domain Services Lab (Azure)
 
-**Enterprise-style Active Directory implementation hosted in Microsoft Azure.**  
-This project demonstrates installing Active Directory Domain Services (AD DS), promoting a Windows Server to a Domain Controller, joining a Windows client to the domain, organizing users and computers with OUs, enabling Remote Desktop access for domain users, and automating bulk user creation with PowerShell.
+This project demonstrates deploying and configuring **Active Directory Domain Services (AD DS)** in **Microsoft Azure**, including virtual machine deployment, DNS configuration, connectivity validation, and core identity management tasks. The lab simulates real-world enterprise identity infrastructure using Windows Server and a Windows client VM.
 
 ---
 
-## 🔥 Project Objectives
-- Deploy Active Directory Domain Services (AD DS)
-- Promote a Windows Server VM to a Domain Controller
-- Create and manage Organizational Units (OUs)
-- Configure Domain Admin and standard domain users
-- Join a Windows client VM to the domain
-- Enable Remote Desktop access for non-admin users
-- Automate user provisioning using PowerShell
-- Verify domain functionality using ADUC
+## 🎥 Project Walkthrough Video
+
+A full walkthrough video demonstrating the setup, configuration, verification, and troubleshooting steps performed in this project.
+
+👉 **YouTube https://youtu.be/pn5dJ4kx_qg?si=Ua44oW5MNWzyvkvq
 
 ---
 
 ## 🧰 Technologies Used
-- Microsoft Azure (Virtual Machines, Virtual Network)
-- Windows Server (Domain Controller)
-- Windows 10/11 Client
+- Microsoft Azure (Virtual Machines, Networking)
+- Windows Server
+- Windows Client (Windows 10/11)
 - Active Directory Domain Services (AD DS)
-- Active Directory Users & Computers (ADUC)
-- PowerShell / PowerShell ISE
+- Windows Defender Firewall
+- PowerShell
 - Remote Desktop Protocol (RDP)
 
 ---
 
 ## 🖥️ Lab Environment
-**Azure Virtual Machines**
-- **DC-1** — Windows Server (Domain Controller)
-- **Client-1** — Windows 10/11 (Domain-joined client)
-
-> VMs can be safely stopped in the Azure Portal when not in use to avoid unnecessary charges.
+- **Domain Controller VM** — Windows Server
+- **Client VM** — Windows 10/11
+- Internal Azure Virtual Network using private IP communication
 
 ---
 
-## 🚀 Part 1 — Domain Controller Setup & Client Join
+## 📸 Project Screenshots & Explanations
 
-### 1️⃣ Install Active Directory Domain Services
-- Installed AD DS on DC-1
-- Promoted server to Domain Controller
-- Created a new forest (`mydomain.com`)
+### 🟦 Part 1 — Azure VM & Domain Preparation
 
-📸 `screenshots/part1/adds-installation.png`
+#### Azure VM Deployment Completed
+This screenshot confirms the successful deployment of the Windows virtual machine in Microsoft Azure, serving as the foundation for the Active Directory lab.
 
----
-
-### 2️⃣ Create OUs and Domain Admin Account
-- Created `_EMPLOYEES` and `_ADMINS` OUs
-- Created Domain Admin user (`jane_admin`)
-- Assigned Domain Admin privileges
-
-📸 `screenshots/part1/ous-and-admin.png`
+![Azure VM deployment complete](screenshots/part1/01-azure-vm-deployment-complete.png)
 
 ---
 
-### 3️⃣ Join Client VM to Domain
-- Configured Client-1 DNS to point to DC-1
-- Joined Client-1 to domain
-- Verified domain join in ADUC
-- Organized Client-1 under `_CLIENTS` OU
+#### Windows Firewall & Network Profile Verification
+Verification of Windows Defender Firewall profiles to ensure the system is properly classified on the network before configuring domain services.
 
-📸 `screenshots/part1/client-domain-join.png`
+![Firewall properties](screenshots/part2/02-azure-vm-firewall-properties.png)
 
 ---
 
-## 🔐 Part 2 — RDP Access & User Automation
+#### Client DNS Configuration (Pointing to Domain Controller)
+The client virtual machine’s DNS settings are manually configured to point to the Domain Controller’s private IP address, which is required for domain authentication and name resolution.
 
-### 4️⃣ Enable Remote Desktop for Domain Users
-- Allowed **Domain Users** Remote Desktop access on Client-1
-- Verified non-admin domain login via RDP
-
-📸 `screenshots/part2/rdp-domain-users.png`
-
-> In production environments, this would typically be handled using Group Policy.
+![Client DNS configuration](screenshots/part1/03-azure-vm-client-dns.png)
 
 ---
 
-### 5️⃣ Bulk User Creation with PowerShell
-- Created multiple domain users via PowerShell script
-- Users automatically placed in `_EMPLOYEES` OU
-- Verified accounts in Active Directory Users & Computers
+#### Client VM Login / Portal Access
+Successful login into the client virtual machine, confirming connectivity and access before further domain validation and testing.
 
-📸 `screenshots/part2/powershell-user-creation.png`
+![Client portal login](screenshots/part2/04-azure-vm-client-portal-loggin.png)
 
-📂 Script location:
+---
+
+### 🟩 Part 2 — Networking, Verification & Services
+
+#### Network Connectivity Test (Ping Domain Controller)
+The client VM successfully pings the Domain Controller’s private IP address, confirming internal network communication within the Azure virtual network.
+
+![Ping private IP](screenshots/part2/05-azure-vm-ping-private-ip.png)
+
+---
+
+#### DNS Verification Using PowerShell
+Running `ipconfig /all` on the client VM to confirm DNS resolution is correctly configured and pointing to the Domain Controller.
+
+![PowerShell ipconfig](screenshots/part2/06-azure-vm-powershell-ipconfig.png)
+
+---
+
+#### Installing Active Directory Domain Services (AD DS)
+Using Server Manager to add the Active Directory Domain Services role to the Windows Server VM as part of domain controller preparation.
+
+![Server Manager add roles](screenshots/part1/07-azure-vm-server-manager-add-roles.png)
+
+---
+
+#### Unlocking a Domain User Account
+Demonstrates basic Active Directory administrative tasks by unlocking a user account, reflecting common real-world identity management scenarios.
+
+![Unlocking user account](screenshots/part2/08-azure-vm-unlocking-user-account.png)
+
+---
+
+## ✅ Skills Demonstrated
+- Azure virtual machine deployment and management
+- DNS dependency awareness in Active Directory environments
+- Network connectivity validation using ICMP
+- Active Directory Domain Services installation
+- Client-to-domain communication troubleshooting
+- PowerShell-based system verification
+- Identity and access management fundamentals
+
+---
+
+## 💡 Notes
+- VMs can be stopped in the Azure Portal when not in use to reduce costs.
+- This lab reflects entry-level to junior systems administration and cloud support responsibilities.
+
+---
+
+## 📌 Next Steps
+- Domain controller promotion
+- Organizational Unit (OU) design
+- Group Policy configuration
+- User and group management automation
+- File sharing and NTFS permissions
 
 
